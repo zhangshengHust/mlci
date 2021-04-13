@@ -4,13 +4,17 @@ Implementation of MLCI model for the TextVQA task. The TextVQA task involves vis
  ## 
 
  ## Dataset
+we use textvqa dataset to evaluate our method. You can download this dataset via the [link](https://textvqa.org/).
 
  ## Train example
  ```sh
 $CUDA_VISIBLE_DEVICES=0 python run.py --config options/exp_1_20_1.yaml --is_train True
  ```
 
- ## Test example
+ ## evaluation example
 ```sh
+# test set results
 $CUDA_VISIBLE_DEVICES=0 python run.py --config options/exp_1_20_1.yaml --is_train False --eval_name test
+# validation set results
+$CUDA_VISIBLE_DEVICES=0 python run.py --config options/exp_1_20_1.yaml --is_train False --eval_name val
  ```
