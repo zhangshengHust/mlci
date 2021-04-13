@@ -1,0 +1,72 @@
+includes:
+- common/defaults/configs/tasks/vqa/textvqa.yml
+logs:
+  dir_logs: save/1/exp_1_20_1/
+model_attributes:
+  classifier:
+    drop: 0.25
+    in_features: 512
+    mid_features: 1024
+    out_features: 843
+  context_feature_dim: 300
+  context_max_len: 50
+  image_feature_dim: 2048
+  image_feature_encodings:
+    bias_file: detectron/fc6/fc7_b.pkl
+    hidden_size: 1024
+    weights_file: detectron/fc6/fc7_w.pkl
+  interIntrablocks:
+    c_size: 300
+    drop: 0.25
+    num_block: 1
+    num_inter_head: 32
+    num_intra_head: 32
+    output_size: 512
+    q_size: 768
+    v_size: 2048
+  losses:
+  - type: logit_bce
+  metrics:
+  - type: vqa_accuracy
+  model_data_dir: ../data
+  num_context_features: 1
+task_attributes:
+  vqa:
+    dataset_attributes:
+      textvqa:
+        processors:
+          answer_processor:
+            params:
+              context_preprocessor:
+                params: {}
+                type: simple_word
+              max_length: 50
+              num_answers: 10
+              preprocessor:
+                params: {}
+                type: simple_word
+              vocab_file: ''
+            type: soft_copy_answer
+        use_ocr: true
+training_parameters:
+  batch_size: 64
+  clip_gradients: true
+  clip_norm_mode: all
+  epoch: 100
+  gpu: true
+  lr: 0.002
+  max_grad_l2_norm: 0.3
+  max_iterations: 24000
+  metric_minimize: false
+  monitored_metric: vqa_accuracy
+  num_workers: 7
+  pretrained_mapping:
+    image_feature_embeddings_list: image_feature_embeddings_list
+    image_feature_encoders: image_feature_encoders
+    image_text_multi_modal_combine_layer: image_text_multi_modal_combine_layer
+    text_embeddings: text_embeddings
+  seed: 1111
+  task_size_proportional_sampling: true
+  use_warmup: true
+  warmup_factor: 0.2
+  warmup_iterations: 1000
